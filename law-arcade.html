@@ -1,0 +1,526 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn with Cases</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .law-cases-section {
+      padding: 2rem 0;
+    }
+
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .case-card {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      background-color: var(--white);
+      box-shadow: 0 4px 8px var(--shadow-color);
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .case-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    .case-card h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .case-card .teaser {
+      font-size: 0.95rem;
+      color: var(--dark-gray);
+      flex-grow: 1;
+      margin: 0.5rem 0 1rem 0;
+    }
+    .case-card .read-more-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      align-self: flex-start;
+      font-weight: 500;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 700px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.8rem;
+      font-weight: bold;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: #888;
+    }
+    .modal-close:hover { color: #333; }
+    .modal-content h3 { margin-top: 0; font-size: 1.5rem; }
+    .modal-content h4 {
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--primary-dark);
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.25rem;
+    }
+    .modal-content p { line-height: 1.7; margin-bottom: 1rem; }
+    .modal-content ul { padding-left: 20px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo-area">
+      <a href="test.html" class="logo">Legally</a>
+      <span class="tagline">Because every agreement deserves clarity.</span>
+    </div>
+    <nav class="nav-buttons">
+      <a href="about.html">About Us</a>
+      <a href="test.html">AI Analysis</a>
+      <a href="professionals.html">Talk to a Professional</a>
+      <a href="law-arcade.html" class="active">Learn with Cases</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="law-cases-section">
+      <div class="case-grid" id="caseGrid">
+        <!-- Case cards will be dynamically inserted here -->
+      </div>
+    </section>
+
+    <!-- Modal for Law Cases -->
+    <div id="caseModal" class="modal-overlay hidden">
+      <div class="modal-content">
+        <button id="modalCloseBtn" class="modal-close">&times;</button>
+        <div id="modalBody"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>⚠️ This is a prototype built for the Hackathon. Not for commercial or legal use. | <a href="disclaimer.html">Disclaimer</a></p>
+  </footer>
+
+  <script>
+    const caseGrid = document.getElementById('caseGrid');
+    const caseModal = document.getElementById('caseModal');
+    const modalBody = document.getElementById('modalBody');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+    const cases = [
+      {
+        title: 'The Pepsi Jet Case',
+        teaser: 'A student sued Pepsi for a Harrier Jet shown in an ad. Was it a real offer or just a joke?',
+        content: `
+          <h3>⚖️ The Pepsi Jet Case (Leonard v. PepsiCo, Inc., 1995, USA)</h3>
+          <h4>Background:</h4>
+          <p>In 1995, Pepsi ran a marketing campaign called “Drink Pepsi, Get Stuff.” Customers could earn Pepsi Points by buying products and exchange them for items like T-shirts or sunglasses. In the TV ad, Pepsi jokingly showed that 7 million points could be redeemed for a Harrier Jet (a real U.S. military fighter jet worth around $33 million).</p>
+          <h4>The Dispute:</h4>
+          <p>John Leonard, a 21-year-old business student, thought this was a genuine offer. He raised $700,000 from investors, sent Pepsi an order form with a check, and demanded the jet. Pepsi refused, saying the ad was a joke. Leonard sued Pepsi in federal court for breach of contract and false advertising.</p>
+          <h4>Court Decision:</h4>
+          <p>The court sided with Pepsi. It held that advertisements are usually invitations to negotiate, not binding offers. Furthermore, the Harrier Jet scenario was “clearly a joke” and not a serious business proposal.</p>
+          <h4>Impact:</h4>
+          <p>This case is now taught in contract law classes worldwide. It illustrates how courts apply the “reasonable person standard” in evaluating whether an ad constitutes a legal offer.</p>
+          <h4>Lesson Learned:</h4>
+          <p>Not all ads create enforceable contracts — context and common sense matter.</p>
+        `
+      },
+      {
+        title: 'Kesavananda Bharati vs. State of Kerala',
+        teaser: 'Can Parliament change any part of the Constitution? This case set the ultimate limits.',
+        content: `
+          <h3>⚖️ Kesavananda Bharati vs. State of Kerala (1973, India)</h3>
+          <h4>Background:</h4>
+          <p>Swami Kesavananda Bharati challenged the Kerala government when it tried to acquire his religious institution’s property under new land reform laws. His petition escalated into a historic constitutional battle: How much power does Parliament have to amend the Indian Constitution?</p>
+          <h4>The Dispute:</h4>
+          <p>Parliament had passed amendments claiming it could alter any part of the Constitution, including Fundamental Rights. Petitioners argued that unlimited amendment powers would let politicians destroy democracy itself.</p>
+          <h4>Court Decision (7–6 split):</h4>
+          <p>The Supreme Court introduced the Basic Structure Doctrine: Parliament can amend the Constitution, but it cannot alter or destroy its “basic structure” — features like democracy, secularism, separation of powers, and rule of law.</p>
+          <h4>Impact:</h4>
+          <p>This ruling permanently shaped Indian constitutional law. It protects citizens from authoritarian changes, even by a majority in Parliament.</p>
+          <h4>Lesson Learned:</h4>
+          <p>Democracy and fundamental rights cannot be compromised, even by elected lawmakers.</p>
+        `
+      },
+      {
+        title: 'Donoghue v. Stevenson',
+        teaser: 'A decomposed snail in a ginger beer bottle led to a landmark ruling on consumer rights.',
+        content: `
+          <h3>⚖️ Donoghue v. Stevenson (1932, UK)</h3>
+          <h4>Background:</h4>
+          <p>Mrs. Donoghue drank ginger beer in a café in Paisley, Scotland. After consuming most of it, she poured the remainder into a glass and discovered a decomposed snail inside the opaque bottle. She fell ill and sued the manufacturer, Mr. Stevenson.</p>
+          <h4>The Dispute:</h4>
+          <p>Donoghue hadn’t bought the drink herself (her friend paid), so there was no direct contract. The legal issue was: Does a manufacturer owe a duty of care to the ultimate consumer?</p>
+          <h4>Court Decision:</h4>
+          <p>The House of Lords ruled that manufacturers do owe a duty of care to consumers. Lord Atkin formulated the “Neighbor Principle”: One must take reasonable care to avoid acts or omissions which one can reasonably foresee would be likely to injure one’s neighbor.</p>
+          <h4>Impact:</h4>
+          <p>This case created the modern law of negligence. It expanded liability beyond direct contracts, holding companies responsible for consumer safety.</p>
+          <h4>Lesson Learned:</h4>
+          <p>Businesses have a duty to ensure their products are safe, even if the consumer didn’t buy directly from them.</p>
+        `
+      },
+      {
+        title: 'LIC vs. Consumer',
+        teaser: 'Can an insurance company deny a claim based on a clause hidden in the fine print?',
+        content: `
+          <h3>⚖️ LIC vs. Consumer (Insurance Transparency Case, India)</h3>
+          <h4>Background:</h4>
+          <p>A customer purchased an insurance policy from LIC. Later, when making a claim, LIC rejected it, pointing to a hidden clause in the fine print.</p>
+          <h4>The Dispute:</h4>
+          <p>The consumer argued that the hidden clause was unfair and misleading. Insurance companies should be clear and transparent about terms.</p>
+          <h4>Court Decision:</h4>
+          <p>The Consumer Court ruled in favor of the consumer. It said clauses buried in fine print that materially affect the policy are not binding, and companies must disclose critical terms in clear language.</p>
+          <h4>Impact:</h4>
+          <p>Strengthened the Consumer Protection Act and highlighted fair disclosure standards in contracts.</p>
+          <h4>Lesson Learned:</h4>
+          <p>Fine print cannot be used to cheat customers. Transparency is a legal duty.</p>
+        `
+      },
+      {
+        title: 'The Delhi Parking Lot Case',
+        teaser: 'Is a parking lot liable if your car gets stolen, even if the ticket says "Owner’s risk"?',
+        content: `
+          <h3>⚖️ The Delhi Parking Lot Case (India)</h3>
+          <h4>Background:</h4>
+          <p>A man parked his car in a commercial lot in Delhi. His ticket stated: “Parking at owner’s risk.” The car was later stolen.</p>
+          <h4>The Dispute:</h4>
+          <p>The parking operator refused liability, citing the disclaimer. The car owner argued that he had paid for a service and expected safety.</p>
+          <h4>Court Decision:</h4>
+          <p>The Delhi High Court ruled that the operator was liable. The disclaimer could not absolve them because the moment money is charged, there is a duty of care, and parking services include reasonable protection against theft.</p>
+          <h4>Impact:</h4>
+          <p>This case clarified that businesses cannot escape liability by throwing disclaimers everywhere.</p>
+          <h4>Lesson Learned:</h4>
+          <p>Paid services come with responsibilities — disclaimers don’t override basic duties.</p>
+        `
+      },
+      {
+        title: 'Shreya Singhal v. Union of India',
+        teaser: 'Can you be arrested for an "offensive" online post? This case defined free speech on the internet in India.',
+        content: `
+          <h3>⚖️ Shreya Singhal v. Union of India (2015, India)</h3>
+          <h4>Background:</h4>
+          <p>Section 66A of the IT Act (2000) allowed arrests for sending “offensive” messages online. It was vague and abused by authorities to silence dissent — even harmless Facebook posts led to arrests.</p>
+          <h4>The Dispute:</h4>
+          <p>Shreya Singhal, a law student, challenged this law as unconstitutional, arguing it violated freedom of speech (Article 19(1)(a)).</p>
+          <h4>Court Decision:</h4>
+          <p>The Supreme Court struck down Section 66A entirely. It said free speech can only be restricted for reasons listed in Article 19(2) (like public order, security of the state), not vague “offensiveness.”</p>
+          <h4>Impact:</h4>
+          <p>This case strengthened digital rights and online free speech in India and set a global example.</p>
+          <h4>Lesson Learned:</h4>
+          <p>Vague laws that chill free speech are unconstitutional.</p>
+        `
+      },
+      {
+        title: 'Vishaka v. State of Rajasthan',
+        teaser: 'When there was no law against workplace sexual harassment, the Supreme Court stepped in to create one.',
+        content: `
+          <h3>⚖️ Vishaka v. State of Rajasthan (1997, India)</h3>
+          <h4>Background:</h4>
+          <p>After the brutal gang rape of Bhanwari Devi, a social worker, the lack of workplace sexual harassment laws in India was exposed.</p>
+          <h4>The Dispute:</h4>
+          <p>Women’s groups filed a Public Interest Litigation (PIL). They argued harassment violates Articles 14, 15, 19, and 21 of the Constitution.</p>
+          <h4>Court Decision:</h4>
+          <p>The Supreme Court laid down the Vishaka Guidelines, mandating organizations to create committees to prevent and address harassment at workplaces.</p>
+          <h4>Impact:</h4>
+          <p>These guidelines became the basis for the POSH Act, 2013 (Prevention of Sexual Harassment at Workplace).</p>
+          <h4>Lesson Learned:</h4>
+          <p>Courts can step in to protect fundamental rights until Parliament enacts a specific law.</p>
+        `
+      },
+      {
+        title: 'MC Mehta v. Union of India',
+        teaser: 'A gas leak case that established the "Absolute Liability" principle for hazardous industries.',
+        content: `
+          <h3>⚖️ MC Mehta v. Union of India (Oleum Gas Leak, 1986, India)</h3>
+          <h4>Background:</h4>
+          <p>After the Bhopal Gas Tragedy, another leak of oleum gas occurred in Delhi’s Shriram factory, harming workers and locals.</p>
+          <h4>The Dispute:</h4>
+          <p>Environmental lawyer MC Mehta argued industries must be held liable for hazardous leaks, even if they followed safety rules.</p>
+          <h4>Court Decision:</h4>
+          <p>The Supreme Court established the principle of Absolute Liability: hazardous industries are fully liable for any damage caused by their operations, with no exceptions allowed. This is stricter than ordinary negligence.</p>
+          <h4>Impact:</h4>
+          <p>This ruling significantly strengthened environmental and industrial safety laws in India.</p>
+          <h4>Lesson Learned:</h4>
+          <p>Industries dealing with dangerous substances must take absolute responsibility for safety.</p>
+        `
+      },
+      {
+        title: 'Indira Sawhney v. Union of India',
+        teaser: 'The case that upheld caste-based reservations but introduced the "creamy layer" rule.',
+        content: `
+          <h3>⚖️ Indira Sawhney v. Union of India (1992 – Mandal Commission, India)</h3>
+          <h4>Background:</h4>
+          <p>The Mandal Commission recommended reservations for Other Backward Classes (OBCs). The government implemented it in 1990, sparking huge protests across the country.</p>
+          <h4>The Dispute:</h4>
+          <p>Petitioners argued that reservations based on caste violated the principles of equality and meritocracy.</p>
+          <h4>Court Decision:</h4>
+          <p>The Supreme Court upheld 27% OBC reservations but introduced the “creamy layer” rule to exclude wealthier, more advanced members of OBCs. It also capped total reservations at 50%.</p>
+          <h4>Impact:</h4>
+          <p>The ruling attempted to balance the goals of social justice with concerns about merit and efficiency in public employment.</p>
+          <h4>Lesson Learned:</h4>
+          <p>Affirmative action is constitutionally valid, but it must be targeted and avoid becoming a tool for reverse discrimination.</p>
+        `
+      },
+      {
+        title: 'Maneka Gandhi v. Union of India',
+        teaser: 'How the seizure of a passport expanded the "Right to Life" to include dignity and personal liberty.',
+        content: `
+          <h3>⚖️ Maneka Gandhi v. Union of India (1978, India)</h3>
+          <h4>Background:</h4>
+          <p>Maneka Gandhi’s passport was suddenly seized by the government without providing any reasons, restricting her ability to travel abroad.</p>
+          <h4>The Dispute:</h4>
+          <p>She challenged the government's action as a violation of her right to personal liberty under Article 21 of the Constitution.</p>
+          <h4>Court Decision:</h4>
+          <p>The Supreme Court gave a landmark judgment, vastly expanding the scope of Article 21. It ruled that the “Right to Life” is not merely about survival but includes the right to live with human dignity, which encompasses freedom of movement and the right to fair, just, and reasonable legal procedures.</p>
+          <h4>Impact:</h4>
+          <p>This case became a cornerstone for many subsequent rights-based legal challenges, including the Right to Privacy.</p>
+          <h4>Lesson Learned:</h4>
+          <p>Personal liberty is a fundamental right that cannot be curtailed arbitrarily by the government without due process of law.</p>
+        `
+      },
+      {
+        title: 'Navtej Singh Johar v. Union of India',
+        teaser: 'The landmark legal battle that decriminalized homosexuality in India by striking down Section 377.',
+        content: `
+          <h3>⚖️ Navtej Singh Johar v. Union of India (2018, India)</h3>
+          <h4>Background:</h4>
+          <p>Section 377 of the Indian Penal Code, a colonial-era law, criminalized homosexuality. LGBTQ+ activists and individuals challenged its constitutionality for years.</p>
+          <h4>The Dispute:</h4>
+          <p>The core question was whether criminalizing consensual same-sex activity between adults violated the fundamental rights to dignity, equality, and privacy.</p>
+          <h4>Court Decision:</h4>
+          <p>After a long legal journey (including a 2009 Delhi HC decriminalization, a 2013 SC reversal), a five-judge constitutional bench of the Supreme Court unanimously struck down the part of Section 377 that criminalized consensual gay sex, declaring it unconstitutional.</p>
+          <h4>Impact:</h4>
+          <p>This was a landmark victory for LGBTQ+ rights in India, affirming the community's right to equality and dignity.</p>
+          <h4>Lesson Learned:</h4>
+          <p>Constitutional morality, based on principles of liberty and equality, must triumph over social prejudice and outdated laws.</p>
+        `
+      },
+      {
+        title: 'The Sabarimala Temple Case',
+        teaser: 'A clash between religious tradition and gender equality over women\'s entry into a temple.',
+        content: `
+          <h3>⚖️ Indian Young Lawyers Association v. State of Kerala (2018 – Sabarimala Case, India)</h3>
+          <h4>Background:</h4>
+          <p>The Sabarimala temple in Kerala traditionally barred women in their menstruating years (aged 10–50) from entering. Petitioners argued this practice was discriminatory and violated gender equality.</p>
+          <h4>The Dispute:</h4>
+          <p>The case pitted the constitutional right to religious freedom and the temple's customs against the fundamental rights to equality (Article 14) and freedom from discrimination (Article 15).</p>
+          <h4>Court Decision:</h4>
+          <p>The Supreme Court, in a 4-1 majority verdict, allowed women of all ages to enter the temple, holding that devotion cannot be a justification for gender discrimination.</p>
+          <h4>Impact:</h4>
+          <p>The judgment sparked widespread debates and protests, highlighting the complex relationship between gender equality, religious freedom, and judicial intervention in India.</p>
+          <h4>Lesson Learned:</h4>
+          <p>Constitutional principles of equality and non-discrimination apply to religious practices, and tradition cannot be used to justify the exclusion of women.</p>
+        `
+      },
+      {
+        title: 'Puttaswamy v. Union of India',
+        teaser: 'The case that declared the Right to Privacy a fundamental right for every Indian citizen.',
+        content: `
+          <h3>⚖️ Puttaswamy v. Union of India (2017, India)</h3>
+          <h4>Background:</h4>
+          <p>Retired Justice K.S. Puttaswamy and others challenged the government's Aadhaar scheme (a biometric identification system), arguing that mandatory linking of Aadhaar for services violated individual privacy.</p>
+          <h4>The Dispute:</h4>
+          <p>The central legal question was whether privacy is a fundamental right protected under the Indian Constitution, specifically as part of the Right to Life and Personal Liberty (Article 21).</p>
+          <h4>Court Decision:</h4>
+          <p>A nine-judge bench of the Supreme Court unanimously ruled that the Right to Privacy is a fundamental right, intrinsic to life and liberty.</p>
+          <h4>Impact:</h4>
+          <p>This landmark ruling has profound implications for personal liberty, data protection, and digital rights in India, setting a precedent for future legal challenges against state surveillance and data collection.</p>
+          <h4>Lesson Learned:</h4>
+          <p>In the digital age, the right to privacy is an essential component of liberty and human dignity.</p>
+        `
+      },
+      {
+        title: 'The Nirbhaya Case',
+        teaser: 'How a horrific crime led to massive social outrage and stricter sexual assault laws in India.',
+        content: `
+          <h3>⚖️ Nirbhaya Case (2012 Delhi Gang Rape, India)</h3>
+          <h4>Background:</h4>
+          <p>In December 2012, a young woman, posthumously named “Nirbhaya” (fearless), was brutally gang-raped and murdered on a moving bus in Delhi. The incident sparked widespread national and international outrage.</p>
+          <h4>The Dispute:</h4>
+          <p>The case led to massive public protests demanding justice and stronger laws to combat sexual violence against women.</p>
+          <h4>Court Decision:</h4>
+          <p>The Supreme Court upheld death sentences for the four adult accused, calling the crime "brutal, barbaric and diabolical." In response to public demand, Parliament passed the Criminal Law (Amendment) Act, 2013, which introduced harsher punishments for sexual offenses, including the death penalty for repeat offenders.</p>
+          <h4>Impact:</h4>
+          <p>The case was a watershed moment for women’s safety in India, triggering significant legal and social reforms and increasing public discourse on sexual violence.</p>
+          <h4>Lesson Learned:</h4>
+          <p>Public outrage and societal demand for justice can be powerful catalysts for legal reform.</p>
+        `
+      },
+      {
+        title: 'Brown v. Board of Education',
+        teaser: 'The U.S. Supreme Court case that declared racial segregation in public schools unconstitutional.',
+        content: `
+          <h3>⚖️ Brown v. Board of Education (1954, USA)</h3>
+          <h4>Background:</h4>
+          <p>Under the "separate but equal" doctrine, many U.S. states had racially segregated public schools. In reality, schools for Black students were consistently underfunded and inferior.</p>
+          <h4>The Dispute:</h4>
+          <p>Parents of Black students, led by the NAACP, argued that segregation violated the Equal Protection Clause of the 14th Amendment, as separate facilities were inherently unequal.</p>
+          <h4>Court Decision:</h4>
+          <p>The Supreme Court unanimously ruled that "separate educational facilities are inherently unequal," overturning the "separate but equal" precedent and declaring state-sponsored segregation in public schools unconstitutional.</p>
+          <h4>Impact:</h4>
+          <p>This was a pivotal moment in the Civil Rights Movement, providing the legal foundation for the desegregation of American society.</p>
+          <h4>Lesson Learned:</h4>
+          <p>True equality in law requires integration and cannot be achieved through segregation, no matter how it is framed.</p>
+        `
+      },
+      {
+        title: 'Roe v. Wade',
+        teaser: 'The historic and controversial case that established a woman\'s constitutional right to abortion in the U.S.',
+        content: `
+          <h3>⚖️ Roe v. Wade (1973, USA)</h3>
+          <h4>Background:</h4>
+          <p>"Jane Roe" (a legal pseudonym) challenged a Texas law that made abortion illegal except to save a woman's life.</p>
+          <h4>The Dispute:</h4>
+          <p>The case centered on whether the U.S. Constitution protected a woman's right to privacy, which would include the right to terminate a pregnancy.</p>
+          <h4>Court Decision:</h4>
+          <p>The Supreme Court recognized a woman's constitutional right to an abortion, based on the right to privacy. It established a trimester framework to balance the state's interests with the woman's rights. (Note: This decision was overturned in 2022 by Dobbs v. Jackson Women’s Health Organization).</p>
+          <h4>Impact:</h4>
+          <p>The ruling legalized abortion nationwide and sparked decades of intense political and social debate on reproductive rights.</p>
+          <h4>Lesson Learned:</h4>
+          <p>Landmark legal rights can be established and later overturned, reflecting the evolving nature of constitutional interpretation and societal values.</p>
+        `
+      },
+      {
+        title: 'Miranda v. Arizona',
+        teaser: 'The case that created the famous "Miranda Rights" read by U.S. police during arrests.',
+        content: `
+          <h3>⚖️ Miranda v. Arizona (1966, USA)</h3>
+          <h4>Background:</h4>
+          <p>Ernesto Miranda was arrested and confessed to a crime during police interrogation without being informed of his constitutional rights.</p>
+          <h4>The Dispute:</h4>
+          <p>The key issue was whether a confession obtained without informing a suspect of their rights against self-incrimination and to legal counsel should be admissible in court.</p>
+          <h4>Court Decision:</h4>
+          <p>The Supreme Court ruled that a suspect in police custody must be informed of their rights before interrogation. This includes the right to remain silent and the right to an attorney.</p>
+          <h4>Impact:</h4>
+          <p>This decision gave rise to the "Miranda Rights," the now-famous warning that U.S. police must read to suspects: “You have the right to remain silent…”</p>
+          <h4>Lesson Learned:</h4>
+          <p>Procedural justice is crucial; protecting the rights of the accused is essential to a fair legal system.</p>
+        `
+      },
+      {
+        title: 'R v. Dudley and Stephens',
+        teaser: 'A harrowing survival story that asked a dark question: can necessity be a defense for murder?',
+        content: `
+          <h3>⚖️ R v. Dudley and Stephens (1884, UK)</h3>
+          <h4>Background:</h4>
+          <p>Four sailors were stranded on a lifeboat at sea without food or water. To survive, two of the sailors, Dudley and Stephens, killed and ate the weakest member, a young cabin boy.</p>
+          <h4>The Dispute:</h4>
+          <p>When rescued, they were charged with murder. Their defense was that it was necessary to kill one person to save the other three.</p>
+          <h4>Court Decision:</h4>
+          <p>The court convicted them of murder, ruling that the defense of "necessity" cannot justify the taking of an innocent life. Their death sentences were later commuted to six months in prison.</p>
+          <h4>Impact:</h4>
+          <p>This case is a cornerstone of criminal law, establishing that there is no general defense of necessity to a charge of murder.</p>
+          <h4>Lesson Learned:</h4>
+          <p>The law holds human life as supreme, and even in the most extreme circumstances, one cannot choose to sacrifice another's life for their own survival.</p>
+        `
+      },
+      {
+        title: 'Apple v. Samsung',
+        teaser: 'The billion-dollar lawsuit that defined the smartphone patent wars.',
+        content: `
+          <h3>⚖️ Apple v. Samsung (2011–2018, USA/Global)</h3>
+          <h4>Background:</h4>
+          <p>Following the launch of the iPhone, Apple sued Samsung, alleging that Samsung's Galaxy smartphones and tablets had copied the iPhone's design and features.</p>
+          <h4>The Dispute:</h4>
+          <p>The legal battles revolved around numerous patents, including design patents for the iPhone's rounded corners and grid of icons, and utility patents for features like the "bounce-back" effect.</p>
+          <h4>Court Decision:</h4>
+          <p>After years of litigation across multiple countries, juries found that Samsung had infringed on Apple's patents. Apple was awarded over a billion dollars in damages, though this amount was later reduced and adjusted through further legal proceedings.</p>
+          <h4>Impact:</h4>
+          <p>The case highlighted the critical role of intellectual property in the tech industry and shaped the competitive landscape of the global smartphone market.</p>
+          <h4>Lesson Learned:</h4>
+          <p>In the tech world, innovation and unique design are not just product features—they are powerful and protectable legal assets.</p>
+        `
+      }
+    ];
+
+    function renderCaseCards() {
+      caseGrid.innerHTML = cases.map((caseItem, index) => `
+        <div class="case-card" data-index="${index}">
+          <h3>${caseItem.title}</h3>
+          <p class="teaser">${caseItem.teaser}</p>
+          <button class="read-more-btn" data-index="${index}">Read Full Case</button>
+        </div>
+      `).join('');
+    }
+
+    function showModalWithCase(index) {
+      const caseData = cases[index];
+      modalBody.innerHTML = caseData.content;
+      caseModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    function closeModal() {
+      caseModal.classList.add('hidden');
+      document.body.style.overflow = ''; // Restore background scrolling
+    }
+
+    // Event Listeners
+    caseGrid.addEventListener('click', (e) => {
+      const target = e.target.closest('.case-card, .read-more-btn');
+      if (target) {
+        const index = parseInt(target.dataset.index, 10);
+        showModalWithCase(index);
+      }
+    });
+
+    modalCloseBtn.addEventListener('click', closeModal);
+    caseModal.addEventListener('click', (e) => { // Close on overlay click
+      if (e.target === caseModal) {
+        closeModal();
+      }
+    });
+    document.addEventListener('keydown', (e) => { // Close with Escape key
+        if (e.key === 'Escape' && !caseModal.classList.contains('hidden')) {
+            closeModal();
+        }
+    });
+
+    // Initial Render
+    renderCaseCards();
+  </script>
+</body>
+</html>

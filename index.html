@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legal Quest - AI Document Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="logo-area">
+      <a href="test.html" class="logo">Legally</a>
+      <span class="tagline">Because every agreement deserves clarity.</span>
+    </div>
+    <nav class="nav-buttons">
+      <a href="about.html">About Us</a>
+      <a href="test.html" class="active">AI Analysis</a>
+      <a href="professionals.html">Talk to a Professional</a>
+      <a href="law-arcade.html">Learn with Cases</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="upload-section">
+      <h2>🚀 Upload a Document for AI Analysis</h2>
+      <form id="uploadForm" enctype="multipart/form-data">
+        <label for="fileInput" class="drop-zone">
+          <p>📄 Drag & drop your PDF file here, or click to select a PDF file</p>
+          <span id="fileName" class="file-name"></span>
+        </label>
+        <input type="file" id="fileInput" name="file" accept="application/pdf" />
+        <button id="submitBtn" type="submit">Upload & Analyze</button>
+      </form>
+    </div>
+
+    <h3>Server Response:</h3>
+
+    <div class="persona-cards-container">
+      <div class="persona-card" data-persona="child">
+        <span class="persona-icon">👶</span>
+        <span class="persona-label">Like I’m 12</span>
+      </div>
+      <div class="persona-card" data-persona="business">
+        <span class="persona-icon">🏢</span>
+        <span class="persona-label">Small Business Owner</span>
+      </div>
+      <div class="persona-card" data-persona="law">
+        <span class="persona-icon">📚</span>
+        <span class="persona-label">Law Student</span>
+      </div>
+    </div>
+
+    <div id="personaInfoBox" class="construction-info-box hidden">
+      <p>🚧 This feature is under construction — will display simplified, practical, or law-student level explanations in the future.</p>
+    </div>
+
+    <div id="responseBox">
+    </div>
+
+    <h2 class="followup-heading">Ask a Follow-up Question</h2>
+    <div class="chat-input-container">
+      <div class="chat-input-bar disabled">
+        <input type="text" placeholder="This feature is coming soon..." disabled />
+        <button class="send-btn" disabled>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>⚠️ This is a prototype built for the Hackathon. Not for commercial or legal use. | <a href="disclaimer.html">Disclaimer</a></p>
+  </footer>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const fileInput = document.getElementById('fileInput');
+    const responseBox = document.getElementById('responseBox');
+    const submitBtn = document.getElementById('submitBtn');
+    const dropZone = document.querySelector('.drop-zone');
+    const fileNameDisplay = document.getElementById('fileName');
+    const personaCards = document.querySelectorAll('.persona-card');
+    const personaInfoBox = document.getElementById('personaInfoBox');
+
+    /**
+     * Renders the AI analysis into a structured HTML card.
+     * @param {object} analysis - The analysis object from the server.
+     * @returns {string} - The HTML string for the analysis card.
+     */
+    function renderAnalysisCard(analysis) {
+      if (!analysis) {
+        return '<p>No analysis data was returned from the server.</p>';
+      }
+
+      let redFlagsHtml = '';
+      if (analysis.red_flags && analysis.red_flags.length > 0) {
+        redFlagsHtml = analysis.red_flags.map(flag => `
+          <li class="severity-${flag.severity || 'unknown'}">
+            <strong>${flag.issue}</strong>
+            <p><strong>Snippet:</strong> <em>"${flag.snippet}"</em></p>
+            <p><strong>Suggestion:</strong> ${flag.suggestion}</p>
+          </li>
+        `).join('');
+      } else {
+        redFlagsHtml = '<p>No specific red flags were identified. The document appears to be standard.</p>';
+      }
+
+      return `
+        <div class="analysis-card">
+          <div class="analysis-section">
+            <h4>Summary</h4>
+            <p>${analysis.summary || 'No summary was provided.'}</p>
+          </div>
+          <div class="analysis-section">
+            <h4>🚩 Red Flags</h4>
+            <ul class="red-flags-list">${redFlagsHtml}</ul>
+          </div>
+          ${analysis.notes ? `<div class="analysis-section"><p><strong>Notes:</strong> ${analysis.notes}</p></div>` : ''}
+        </div>
+      `;
+    }
+
+    form.addEventListener('submit', async (e) => {
+      // 1. Prevent the default form submission which reloads the page
+      e.preventDefault();
+
+      if (!fileInput.files.length) {
+        responseBox.textContent = 'Error: Please select a file first.';
+        fileNameDisplay.textContent = '';
+        return;
+      }
+
+      // 2. Provide user feedback
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Analyzing...';
+      responseBox.innerHTML = '<div class="loader-container"><div class="loader"></div><p>Uploading and processing your document...</p></div>';
+
+      const formData = new FormData();
+      formData.append('file', fileInput.files[0]);
+
+      try {
+        // 3. Use the Fetch API to send the file asynchronously
+        const response = await fetch('http://localhost:3000/analyze', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const data = await response.json();
+
+        // 4. Format and display the analysis
+        if (response.ok) {
+            responseBox.innerHTML = renderAnalysisCard(data.analysis);
+        } else {
+            // If server returned an error, display it
+            responseBox.innerHTML = `<pre class="error-text">${data.error || 'An unknown error occurred.'}</pre>`;
+        }
+      } catch (error) {
+        responseBox.textContent = `An error occurred: ${error.message}`;
+        console.error('Upload failed:', error);
+      } finally {
+        // 5. Re-enable the button
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Upload & Analyze';
+      }
+    });
+
+    // --- Drag and Drop Logic ---
+
+    // Prevent default drag behaviors
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }, false);
+    });
+
+    // Highlight drop zone when item is dragged over it
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropZone.addEventListener(eventName, () => {
+        dropZone.classList.add('drag-over');
+      }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, () => {
+        dropZone.classList.remove('drag-over');
+      }, false);
+    });
+
+    // Handle dropped files
+    dropZone.addEventListener('drop', (e) => {
+      fileInput.files = e.dataTransfer.files;
+      fileNameDisplay.textContent = `Selected: ${fileInput.files[0].name}`;
+    }, false);
+
+    // Update file name when selected via click
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length > 0) {
+        fileNameDisplay.textContent = `Selected: ${fileInput.files[0].name}`;
+      }
+    });
+
+    // --- Persona Toggle Logic ---
+    personaCards.forEach(card => {
+      card.addEventListener('click', () => {
+        // Remove active class from all buttons
+        personaCards.forEach(c => c.classList.remove('active'));
+        // Add active class to the clicked button
+        card.classList.add('active');
+        // Show the info box
+        personaInfoBox.classList.remove('hidden');
+      });
+    });
+  </script>
+</body>
+</html>

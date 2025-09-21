@@ -1,0 +1,6 @@
+# Node
+node_modules/
+
+# Secrets
+.env
+gcloud-key.json

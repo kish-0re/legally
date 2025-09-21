@@ -1,0 +1,535 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+:root {
+	--primary-color: #4a90e2;
+	--primary-dark: #357abd;
+	--text-color: #3a3a3a;
+	--light-gray: #f0f2f5;
+	--dark-gray: #6c757d;
+	--background-color: #ffffff;
+	--white: #ffffff;
+	--shadow-color: rgba(0, 0, 0, 0.08);
+	--border-color: #e8e8e8;
+}
+
+/* General Body Styles */
+body {
+	font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Helvetica, Arial, sans-serif;
+	line-height: 1.6;
+	margin: 0;
+	background-color: var(--background-color);
+	color: var(--text-color);
+}
+
+/* Header and Navigation */
+.header {
+	background-color: var(--white);
+	padding: 1rem 2rem;
+	border-bottom: 1px solid var(--border-color);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0 2px 8px var(--shadow-color);
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+}
+
+.logo-area {
+	display: flex;
+	flex-direction: column;
+}
+
+.logo {
+	font-size: 1.5rem;
+	font-weight: bold;
+	color: var(--primary-color);
+	text-decoration: none;
+}
+.tagline {
+	font-size: 0.85rem;
+	color: #6c757d;
+	margin-top: -5px;
+}
+
+.nav-buttons a {
+	text-decoration: none;
+	color: var(--dark-gray);
+	background-color: transparent;
+	padding: 0.5rem 1rem;
+	border-radius: 5px;
+	margin-left: 1rem;
+	font-weight: 500;
+	transition: all 0.3s ease;
+	position: relative;
+}
+
+.nav-buttons a:hover,
+.nav-buttons a.active {
+	color: var(--primary-color);
+}
+.nav-buttons a.active::after {
+	content: "";
+	position: absolute;
+	bottom: -5px;
+	left: 0.5rem;
+	right: 0.5rem;
+	height: 2px;
+	background: var(--primary-color);
+}
+
+/* Main Content Area */
+.container {
+	max-width: 960px;
+	margin: 2rem auto;
+	padding: 0 2rem;
+}
+
+h2,
+h3 {
+	color: #212529;
+	border-bottom: 2px solid var(--primary-color);
+	padding-bottom: 0.5rem;
+	margin-top: 2rem;
+}
+
+/* Form Elements */
+input[type="file"],
+input[type="text"] {
+	padding: 8px;
+	border: 1px solid var(--border-color);
+	border-radius: 5px;
+	margin-right: 10px;
+	transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus {
+	outline: none;
+	border-color: var(--primary-color);
+	box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+button {
+	padding: 9px 15px;
+	border: none;
+	background-image: linear-gradient(
+		45deg,
+		var(--primary-color),
+		var(--primary-dark)
+	);
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+	font-weight: 500;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+	box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+	transform: translateY(-2px);
+}
+
+button:disabled {
+	background-color: #6c757d;
+	cursor: not-allowed;
+}
+
+/* Response/Answer Boxes */
+#responseBox {
+	background-color: var(--white);
+	padding: 1em;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	min-height: 50px;
+}
+
+#responseBox pre {
+	margin: 0; /* Remove default margin from pre tag */
+	white-space: pre;
+	word-wrap: break-word;
+	overflow-x: auto;
+}
+
+/* --- Analysis Card Styles --- */
+.analysis-card {
+	border: 1px solid var(--border-color);
+	border-radius: 8px;
+	box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.analysis-section {
+	padding: 1.5rem;
+	border-bottom: 1px solid var(--border-color);
+}
+
+.analysis-section:last-child {
+	border-bottom: none;
+}
+
+.analysis-section h4 {
+	margin-top: 0;
+	margin-bottom: 0.75rem;
+	color: var(--primary-dark);
+	border-bottom: none;
+	font-size: 1.2rem;
+}
+
+.analysis-section p {
+	margin: 0.5rem 0 0 0;
+}
+
+.red-flags-list {
+	list-style-type: none;
+	padding-left: 0;
+	margin: 0;
+}
+
+.red-flags-list li {
+	padding: 1rem;
+	margin-top: 1rem;
+	border-radius: 5px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+.severity-high {
+	border-left-color: #e74c3c;
+	background-color: #fbe9e7;
+}
+.severity-medium {
+	border-left-color: #f39c12;
+	background-color: #fff3e0;
+}
+.severity-low {
+	border-left-color: #3498db;
+	background-color: #e7f3fe;
+}
+
+/* --- Loader Spinner --- */
+.loader-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem;
+	color: var(--dark-gray);
+}
+
+.loader {
+	border: 5px solid #f3f3f3; /* Light grey */
+	border-top: 5px solid var(--primary-color); /* Blue */
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	animation: spin 1s linear infinite;
+	margin-bottom: 1rem;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* --- Professionals Page Styles --- */
+.profile-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 1.5rem;
+	margin-top: 2rem;
+}
+
+.profile-card {
+	background-color: #fff;
+	border: 1px solid var(--border-color);
+	border-radius: 8px;
+	padding: 1.5rem;
+	text-align: center;
+	text-decoration: none;
+	color: inherit;
+	transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+	box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.profile-card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 10px 20px var(--shadow-color);
+}
+
+.img-placeholder {
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	background-color: var(--light-gray);
+	border: 3px solid var(--border-color);
+	margin: 0 auto 1rem auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--dark-gray);
+	font-size: 3rem;
+}
+
+.img-placeholder.large {
+	width: 150px;
+	height: 150px;
+	font-size: 4rem;
+}
+
+.profile-card h3 {
+	margin: 0.5rem 0;
+	border-bottom: none;
+	font-size: 1.25rem;
+}
+
+.profile-card .specialty {
+	color: var(--primary-color);
+	font-weight: bold;
+	margin-bottom: 0.5rem;
+}
+
+.profile-card .location {
+	font-size: 0.95rem;
+	color: #6c757d;
+	margin-bottom: 1.5rem;
+}
+
+.connect-btn {
+	width: 100%;
+	padding: 10px 15px;
+	font-weight: 600;
+	font-size: 1rem;
+	background-image: none;
+	background-color: var(--primary-color);
+	border: 1px solid var(--primary-color);
+	color: var(--white);
+}
+
+.profile-card:hover .connect-btn {
+	background-color: var(--primary-dark);
+	border-color: var(--primary-dark);
+}
+
+/* --- Lawyer Detail Page --- */
+.lawyer-profile-detail {
+	display: flex;
+	align-items: center;
+	gap: 2rem;
+	margin-bottom: 2rem;
+}
+
+/* --- Footer --- */
+.footer {
+	text-align: center;
+	padding: 2rem;
+	margin-top: 4rem;
+	background-color: var(--white);
+	border-top: 1px solid var(--border-color);
+	color: var(--dark-gray);
+}
+
+.footer a {
+	color: var(--primary-color);
+	text-decoration: none;
+}
+
+/* --- Disclaimer --- */
+.disclaimer {
+	margin-top: 3rem;
+	padding: 1rem;
+	background-color: var(--white);
+	border-left: 4px solid var(--primary-color);
+	font-size: 0.9rem;
+}
+
+/* --- Chat Input / Follow-up Question --- */
+.chat-input-container {
+	margin-top: 1rem;
+}
+
+.chat-input-bar {
+	display: flex;
+	align-items: center;
+	background-color: var(--white);
+	border: 1px solid var(--border-color);
+	border-radius: 50px; /* Pill shape */
+	padding: 0.5rem 0.75rem 0.5rem 1.5rem;
+	box-shadow: 0 2px 8px var(--shadow-color);
+	transition: box-shadow 0.2s ease;
+}
+
+.chat-input-bar:focus-within {
+	box-shadow: 0 2px 8px rgba(74, 144, 226, 0.4);
+	border-color: var(--primary-color);
+}
+
+.chat-input-bar.disabled {
+	background-color: var(--light-gray);
+	cursor: not-allowed;
+}
+
+.chat-input-bar input {
+	flex-grow: 1;
+	border: none;
+	background: transparent;
+	outline: none;
+	font-size: 1rem;
+	font-family: "Poppins", sans-serif;
+}
+
+.chat-input-bar .send-btn {
+	background-color: var(--primary-color);
+	border: none;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	margin-left: 0.5rem;
+	padding: 0;
+	box-shadow: none;
+	transform: none;
+}
+
+.chat-input-bar .send-btn:disabled {
+	background-color: #bdc3c7;
+}
+
+/* --- Upload Section --- */
+.upload-section {
+	background-color: #eaf2ff;
+	padding: 2rem;
+	border-radius: 12px;
+	border: 1px solid #c0d9ff;
+	margin-bottom: 2rem;
+	text-align: center;
+}
+
+.upload-section h2 {
+	margin-top: 0;
+	border-bottom: none; /* Remove the default border from h2 inside this block */
+	font-size: 1.5rem;
+}
+.upload-section form {
+	margin-top: 1rem;
+}
+
+.drop-zone {
+	border: 2px dashed #a8c8f9;
+	border-radius: 10px;
+	padding: 40px;
+	cursor: pointer;
+	transition: background-color 0.2s ease, border-color 0.2s ease;
+	margin-top: 1.5rem;
+	display: block; /* Make label a block element */
+}
+
+.drop-zone:hover {
+	background-color: #e1eefe;
+}
+
+.drop-zone.drag-over {
+	background-color: #d1e5ff;
+	border-color: var(--primary-color);
+}
+
+.drop-zone p {
+	margin: 0;
+	font-size: 1.1rem;
+	color: var(--dark-gray);
+}
+
+.file-name {
+	display: block;
+	margin-top: 1rem;
+	font-weight: 500;
+	color: var(--primary-dark);
+}
+
+/* Hide the actual file input */
+#fileInput {
+	display: none;
+}
+
+.upload-section button {
+	margin-top: 1.5rem;
+	font-size: 1.1rem;
+	padding: 12px 24px;
+}
+
+.followup-heading {
+	border-bottom: none;
+	font-size: 1.3rem;
+	padding-bottom: 0;
+	margin-bottom: 0;
+}
+
+/* --- Persona Card Selector --- */
+.persona-cards-container {
+	display: flex;
+	gap: 1rem;
+	margin-top: 1.5rem;
+	margin-bottom: 1.5rem;
+}
+
+.persona-card {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+	border: 2px solid var(--border-color);
+	background-color: var(--white);
+	color: var(--text-color);
+	font-weight: 500;
+	cursor: pointer;
+	border-radius: 12px;
+	text-align: center;
+	transition: all 0.2s ease-in-out;
+}
+
+.persona-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.persona-card.active {
+	border-color: var(--primary-color);
+	background-color: #eaf2ff;
+	box-shadow: 0 4px 15px rgba(74, 144, 226, 0.2);
+	transform: translateY(-3px);
+}
+
+.persona-icon {
+	font-size: 1.5rem;
+	margin-bottom: 0.25rem;
+}
+
+@media (max-width: 768px) {
+	.persona-cards-container {
+		flex-direction: column;
+	}
+}
+
+/* --- Construction Info Box --- */
+.construction-info-box {
+	margin-bottom: 1.5rem;
+	padding: 1rem;
+	background-color: #fff5c2;
+	border-left: 4px solid #ffd966;
+	border-radius: 4px;
+}
+.construction-info-box p {
+	margin: 0;
+}
+
+.hidden {
+	display: none;
+}

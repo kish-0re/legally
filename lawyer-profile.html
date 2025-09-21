@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lawyer Profile - Legal Quest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo-area">
+      <a href="test.html" class="logo">Legally</a>
+      <span class="tagline">Because every agreement deserves clarity.</span>
+    </div>
+    <nav class="nav-buttons">
+      <a href="about.html">About Us</a>
+      <a href="test.html">AI Analysis</a>
+      <a href="professionals.html" class="active">Talk to a Professional</a>
+      <a href="law-arcade.html">Learn with Cases</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="lawyer-profile-detail">
+      <div class="img-placeholder large"></div>
+      <div class="lawyer-info">
+        <h2 id="profile-name">Lawyer Name</h2>
+        <p id="profile-specialty" class="specialty">Specialization</p>
+        <p><strong>Contact:</strong> <span id="profile-contact">contact@example.com</span></p>
+        <p><strong>Location:</strong> <span id="profile-location">City, Country</span></p>
+      </div>
+    </div>
+
+    <h3>About</h3>
+    <p>
+      This is a placeholder for the lawyer's detailed biography. Jane Doe has been practicing law for over 15 years, focusing on corporate governance, mergers and acquisitions, and commercial contracts. She received her J.D. from a prestigious law school and is committed to providing her clients with strategic, business-oriented legal advice.
+    </p>
+
+    <h3>Areas of Practice</h3>
+    <ul>
+      <li>Business Formation & Structuring</li>
+      <li>Contract Drafting & Negotiation</li>
+      <li>Mergers & Acquisitions</li>
+      <li>Intellectual Property Licensing</li>
+      <li>Corporate Compliance</li>
+    </ul>
+  </main>
+
+  <footer class="footer">
+    <p>⚠️ This is a prototype built for the Hackathon. Not for commercial or legal use. | <a href="disclaimer.html">Disclaimer</a></p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const lawyerDataString = localStorage.getItem('selectedLawyer');
+      if (lawyerDataString) {
+        const lawyer = JSON.parse(lawyerDataString);
+
+        // Update the page content with the lawyer's data
+        document.getElementById('profile-name').textContent = lawyer.name;
+        document.getElementById('profile-specialty').textContent = lawyer.specialty;
+        document.getElementById('profile-contact').textContent = lawyer.contact;
+        document.getElementById('profile-location').textContent = lawyer.location;
+
+        // Optional: Clear the data from localStorage after use
+        // localStorage.removeItem('selectedLawyer');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Talk to a Professional - Legal Quest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo-area">
+      <a href="test.html" class="logo">Legally</a>
+      <span class="tagline">Because every agreement deserves clarity.</span>
+    </div>
+    <nav class="nav-buttons">
+      <a href="about.html">About Us</a>
+      <a href="test.html">AI Analysis</a>
+      <a href="professionals.html" class="active">Talk to a Professional</a>
+      <a href="law-arcade.html">Learn with Cases</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>Talk to a Legal Professional</h2>
+    <p>
+      While our AI provides powerful insights and summaries, it is not a substitute for professional legal advice. For complex situations or when you need binding legal counsel, we always recommend consulting with a qualified lawyer.
+    </p>
+
+    <div class="profile-grid">
+      <!-- Lawyer Profile Card 1 -->
+      <a href="lawyer-profile.html" class="profile-card" data-name="Advocate Priya Sharma" data-specialty="Property & Rental Disputes" data-location="Delhi NCR" data-contact="priya.sharma@lawbuddy.com">
+        <div class="img-placeholder"></div>
+        <h3>Advocate Priya Sharma</h3>
+        <p class="specialty">Property &amp; Rental Disputes</p>
+        <p class="location">📍 Delhi NCR</p>
+        <button class="connect-btn">Connect</button>
+      </a>
+
+      <!-- Lawyer Profile Card 2 -->
+      <a href="lawyer-profile.html" class="profile-card" data-name="Advocate Arjun Mehta" data-specialty="Contract Law, Corporate Agreements" data-location="Bengaluru" data-contact="arjun.mehta@lawbuddy.com">
+        <div class="img-placeholder"></div>
+        <h3>Advocate Arjun Mehta</h3>
+        <p class="specialty">Intellectual Property</p>
+        <p class="location">📍 Bengaluru</p>
+        <button class="connect-btn">Connect</button>
+      </a>
+
+      <!-- Lawyer Profile Card 3 -->
+      <a href="lawyer-profile.html" class="profile-card" data-name="Advocate Neha Verma" data-specialty="Family Law, Mediation" data-location="Mumbai" data-contact="neha.verma@lawbuddy.com">
+        <div class="img-placeholder"></div>
+        <h3>Advocate Neha Verma</h3>
+        <p class="specialty">Family Law, Mediation</p>
+        <p class="location">📍 Mumbai</p>
+        <button class="connect-btn">Connect</button>
+      </a>
+
+      <!-- Lawyer Profile Card 4 -->
+      <a href="lawyer-profile.html" class="profile-card" data-name="Advocate Rohit Kapoor" data-specialty="Civil Litigation, Consumer Protection" data-location="Lucknow" data-contact="rohit.kapoor@lawbuddy.com">
+        <div class="img-placeholder"></div>
+        <h3>Advocate Rohit Kapoor</h3>
+        <p class="specialty">Civil Litigation, Consumer Protection</p>
+        <p class="location">📍 Lucknow</p>
+        <button class="connect-btn">Connect</button>
+      </a>
+
+      <!-- Lawyer Profile Card 5 -->
+      <a href="lawyer-profile.html" class="profile-card" data-name="Advocate Ananya Iyer" data-specialty="Employment Law, Workplace Rights" data-location="Chennai" data-contact="ananya.iyer@lawbuddy.com">
+        <div class="img-placeholder"></div>
+        <h3>Advocate Ananya Iyer</h3>
+        <p class="specialty">Employment Law, Workplace Rights</p>
+        <p class="location">📍 Chennai</p>
+        <button class="connect-btn">Connect</button>
+      </a>
+    </div>
+
+    <div class="disclaimer">
+      <p><strong>Please Note:</strong> The lawyer profiles listed on this page are for demonstration purposes only and are not real individuals. This feature is intended to show how a connection with a legal professional might work in a future version of the application.</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>The profiles on this page are dummy profiles. | ⚠️ This is a prototype built for the Hackathon. Not for commercial or legal use. | <a href="disclaimer.html">Disclaimer</a></p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const profileCards = document.querySelectorAll('.profile-card');
+      profileCards.forEach(card => {
+        card.addEventListener('click', (event) => {
+          // Prevent the default link behavior to handle it with JS
+          event.preventDefault();
+
+          // Store the lawyer's data in localStorage
+          localStorage.setItem('selectedLawyer', JSON.stringify(card.dataset));
+
+          // Navigate to the profile page
+          window.location.href = card.href;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
