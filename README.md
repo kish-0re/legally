@@ -49,9 +49,6 @@ API_KEY=your-vertex-ai-api-key
 GOOGLE_APPLICATION_CREDENTIALS=./gcloud-key.json
 ```
 
-⚠️ Note: Add your own **gcloud-key.json** (service account key).  
-This file is **NOT included** in the repo for security.  
-
 ### 4. Run backend
 ```bash
 node server.js
@@ -64,7 +61,7 @@ Visit: [http://localhost:3000]
 This is a **hackathon demo project**, not a production app.  
 - The AI outputs are currently in **raw text** format.  
 - Some features (follow-up Q&A, JSON formatting, gamified quizzes) are **work-in-progress**.  
-- Credentials/secrets are hidden in `.env` for safety.  
+ 
 
 ---
 
